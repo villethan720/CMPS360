@@ -1,0 +1,70 @@
+package Swing;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.*;
+
+public class Survey {
+    
+    public static void main(String[] args){
+        String[] questions = 
+        {
+            "Who played well this season \n A. 4 B. 7 C. 9", // \n starts a new line
+            "How many points did Boswell score this season? \n A. 3 B. 40 C. 114",
+            "How many penalties did the Steelers have in game 3 of the season \n A.1 B.3 C.0"
+        };
+
+        char[] answers = {'C', 'C', 'B'}; //holds the answers
+        char ans = ' ';
+        int x, correct = 0;  //correct holds how many question the user gerts right
+        String entry;
+        boolean isTrue;
+        int questNum = 1;
+        boolean notRight;
+        List<Integer> wrongQuest = new ArrayList<Integer>(5);
+
+
+        for(x = 0; x < questions.length; ++x){
+            isTrue = false;
+            int firstError = 0;
+            notRight = false;
+           
+
+            while(!isTrue){
+                isTrue = true;
+                entry = JOptionPane.showInputDialog(null, questions[x]);
+                ans = entry.charAt(0); //assigns the input to the char ans
+                
+                
+                if(ans != 'A' && ans != 'B' && ans !='C'){
+                    isTrue = false;
+                    if(firstError == 0){
+                        questions[x] = questions[x] + "\n Your ansmer must be A, B, or C"; //prevents user from input a different answer
+                        firstError = 1;
+                    }
+                }
+            }
+
+            if(ans == answers[x]){
+                ++correct; //checks the input with the actual answer
+                JOptionPane.showMessageDialog(null, "Correct");
+            }
+            else {
+                notRight = true;
+
+                JOptionPane.showMessageDialog(null, "You got question " + questNum + " wrong. The correct answer is " 
+                + answers[x]);
+            }
+            
+            if(notRight == true){
+                wrongQuest.add(questNum);
+            }
+
+            questNum++;
+        }
+
+        JOptionPane.showMessageDialog(null, "You got " + correct + " right and \n"
+        +(questions.length -correct) + " wrong. You got question(s) " + wrongQuest + " incorrect");
+    }
+}
